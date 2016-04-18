@@ -3,6 +3,8 @@ var express = require("express");
 var app = express();
 app.get('/', function(req, res){ res.send('The robot is happily running.'); });
 app.listen(process.env.PORT || 5000);
+//TBD: RUN THIS BY ROBERTO!
+require('heroku-self-ping')("http://http://sleep-tweeter.herokuapp.com/");
 // END HEROKU SETUP
 
 
@@ -38,7 +40,7 @@ var tu = require('tuiter')(config.keys);
 // Run the application.
 setInterval(function() {
     tu.update({
-            status: "The time and date is currently " + Date()
+            status: "The time and date is " + Date()
     }, onTweet);
     console.log('Tweeting at ' + Date());
 }, 600000);
