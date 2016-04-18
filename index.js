@@ -38,7 +38,7 @@ var tu = require('tuiter')(config.keys);
 // Run the application.
 setInterval(function() {
     tu.update({
-            status: "It is " + Date()
+            status: "The time and date is currently " + Date()
     }, onTweet);
     console.log('Tweeting at ' + Date());
-}, 30000);
+}, 10000);
