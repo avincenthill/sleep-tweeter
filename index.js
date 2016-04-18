@@ -41,4 +41,4 @@ setInterval(function() {
             status: "The time and date is currently " + Date()
     }, onTweet);
     console.log('Tweeting at ' + Date());
-}, 10000);
+}, 600000);
