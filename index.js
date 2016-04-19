@@ -4,7 +4,7 @@ var sp = require('heroku-self-ping')(process.env.APP_URL, {
         interval: process.env.SELF_PING_MINUTES * 60 * 1000, // minutes in msec, default 20 * 60 * 1000
         login: console.log, // default console.log
         verbose: true // default false
-    },);
+    });
 var app = express();
 app.get('/', function(req, res){ res.send('The robot is happily running.'); });
 app.listen(process.env.PORT || 5000);
