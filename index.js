@@ -41,16 +41,16 @@ function onTweet(err) {
 var tu = require('tuiter')(config.keys);
 
 //What the bot tweets
-var statusMessage = "The time and date is " + Date();
+var statusMessage = "The time and date is ";
 
 // Tweet once before timer
 tu.update({
-        status: statusMessage
+        status: statusMessage + Date()
 }, onTweet);
 
 // Run the application.
 setInterval(function() {
     tu.update({
-            status: statusMessage
+            status: statusMessage + Date()
     }, onTweet);
 }, 600000);
