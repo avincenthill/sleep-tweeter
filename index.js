@@ -1,10 +1,13 @@
 // START HEROKU SETUP
 var express = require("express");
+var sp = require('heroku-self-ping')(process.env.APP_URL, {
+        interval: process.env.SELF_PING_MINUTES * 60 * 1000, // minutes in msec, default 20 * 60 * 1000
+        login: console.log, // default console.log
+        verbose: true // default false
+    },);
 var app = express();
 app.get('/', function(req, res){ res.send('The robot is happily running.'); });
 app.listen(process.env.PORT || 5000);
-//TBD: RUN THIS BY ROBERTO!
-require('heroku-self-ping')("http://http://sleep-tweeter.herokuapp.com/");
 // END HEROKU SETUP
 
 
@@ -13,7 +16,6 @@ require('heroku-self-ping')("http://http://sleep-tweeter.herokuapp.com/");
 // Config.keys uses environment variables so sensitive info is not in the repo.
 var config = {
     me: 'sleep_tweeter', // The authorized account with a list to retweet.
-    myList: 'favpornstars', // The list we want to retweet.
     regexFilter: '', // Accept only tweets matching this regex pattern.
     regexReject: '(RT|@)', // AND reject any tweets matching this regex pattern.
 
@@ -27,6 +29,7 @@ var config = {
 
 // What to do after we tweet something.
 function onTweet(err) {
+    console.log('Tweeting at ' + Date());
     if(err) {
         console.error("tweeting failed :(");
         console.error(err);
@@ -37,10 +40,17 @@ function onTweet(err) {
 // Use the tuiter node module to get access to twitter.
 var tu = require('tuiter')(config.keys);
 
+//What the bot tweets
+var statusMessage = "The time and date is " + Date();
+
+// Tweet once before timer
+tu.update({
+        status: statusMessage
+}, onTweet);
+
 // Run the application.
 setInterval(function() {
     tu.update({
-            status: "The time and date is " + Date()
+            status: statusMessage
     }, onTweet);
-    console.log('Tweeting at ' + Date());
 }, 600000);
